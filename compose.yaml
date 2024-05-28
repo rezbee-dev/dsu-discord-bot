@@ -1,0 +1,11 @@
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    # This is set by default, just setting it so i know its there
+    env_file:
+      - path: ./.env
+        required: true
+
