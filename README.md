@@ -11,3 +11,4 @@
 - Spring Boot
 - PostgreSQL
 - Docker
+- Digital Ocean VPS
