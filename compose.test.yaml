@@ -1,0 +1,17 @@
+services:
+  server:
+    build:
+      context: .
+      target: test
+    ports:
+      - 8000:8000
+      # for debugging
+      - 7000:7000
+    # Set by default
+    volumes:
+      - type: bind
+        source: ./pom.xml
+        target: /build/pom.xml
+    env_file:
+      - path: ./.env
+        required: true
