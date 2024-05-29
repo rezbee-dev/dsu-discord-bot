@@ -11,3 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello World! 😜"
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          envs: BOT_TOKEN
+          script: |
+            docker compose down
+            rm -rf dsu-discord-bot
+            git clone git@github.com:rezbee-dev/dsu-discord-bot.git
+            cd dsu-discord-bot
+            touch .env
+            echo BOT_TOKEN="$BOT_TOKEN" >> .env
+            docker compose up --build -d 
+            echo 'Deployment successful'
+            
+    
