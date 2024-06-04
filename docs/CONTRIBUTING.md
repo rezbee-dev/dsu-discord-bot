@@ -7,7 +7,18 @@
 _pending_
 
 ## Setting up
-_pending_
+
+**With Docker**
+- With `make` installed
+  - run `make dev`
+- Without `make` installed
+  - run `docker compose -f ./compose.dev.yaml up --build`
+
+**Without Docker**
+- In Intellij
+  - Click on `Main` file in `src` directory and run
+- In maven
+  - Run `./mvnw clean install` then `./mvnw spring-boot:run`
 
 ## Contributing
 - TODO: Info on social ettiquite and conduct, coding guidelines (style, practices, patterns, etc), github stuff like issues, project board, and pull requests
