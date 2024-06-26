@@ -3,6 +3,7 @@ package com.dailystandups.dsudiscordbot;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
+import org.javacord.api.listener.interaction.SlashCommandCreateListener;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,8 @@ public class DiscordBot {
 
     @Autowired
     List<MessageCreateListener> commands;
+    @Autowired
+    List<SlashCommandCreateListener> slashCommands;
 
     @Bean
     public DiscordApi start() {
@@ -36,6 +39,7 @@ public class DiscordBot {
                 .join();
 
         this.commands.forEach(api::addMessageCreateListener);
+        this.slashCommands.forEach(api::addSlashCommandCreateListener);
 
         return api;
     }
