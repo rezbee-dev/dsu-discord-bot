@@ -1,9 +1,9 @@
 package com.dailystandups.dsudiscordbot;
 
+import com.dailystandups.dsudiscordbot.interactions.BaseSlashCommand;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
-import org.javacord.api.listener.interaction.SlashCommandCreateListener;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 public class DiscordBot {
@@ -21,7 +22,7 @@ public class DiscordBot {
     @Autowired
     List<MessageCreateListener> commands;
     @Autowired
-    List<SlashCommandCreateListener> slashCommands;
+    List<BaseSlashCommand> slashCommands;
 
     @Bean
     public DiscordApi start() {
@@ -39,6 +40,12 @@ public class DiscordBot {
                 .join();
 
         this.commands.forEach(api::addMessageCreateListener);
+        api.bulkOverwriteGlobalApplicationCommands(
+                slashCommands
+                        .stream()
+                        .map(BaseSlashCommand::getSlashCommandBuilder)
+                        .collect(Collectors.toSet()))
+                .join();
         this.slashCommands.forEach(api::addSlashCommandCreateListener);
 
         return api;
