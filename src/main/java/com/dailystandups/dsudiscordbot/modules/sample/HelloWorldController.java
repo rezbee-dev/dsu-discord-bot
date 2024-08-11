@@ -1,4 +1,4 @@
-package com.dailystandups.dsudiscordbot.http;
+package com.dailystandups.dsudiscordbot.modules.sample;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
